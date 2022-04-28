@@ -1,4 +1,7 @@
-package com.example.libraryMS.databse;
+package com.example.libraryMS.domain;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,6 +14,7 @@ import java.util.Set;
                 @UniqueConstraint(name = "phone_number_unique", columnNames = "phone_number")
         }
 )
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class Client {
 
     @Id
@@ -63,6 +67,8 @@ public class Client {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
+
+    public void setId(Long Id) { this.id = Id;}
 
     public Long getId() {
         return id;

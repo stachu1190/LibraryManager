@@ -1,7 +1,6 @@
-package com.example.libraryMS.databse;
+package com.example.libraryMS.domain;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 
 @Entity(name = "Boorrow")

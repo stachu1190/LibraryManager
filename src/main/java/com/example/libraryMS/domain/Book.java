@@ -1,10 +1,14 @@
-package com.example.libraryMS.databse;
+package com.example.libraryMS.domain;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "Book")
 @Table(name = "book")
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class Book {
 
     @Id
@@ -60,6 +64,10 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", quantity='" + quantity + '\'' +
                 '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
