@@ -1,6 +1,7 @@
-package com.example.libraryMS;
+package com.example.libraryMS.databse;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "Client")
 @Table(
@@ -51,10 +52,12 @@ public class Client {
     )
     private String phoneNumber;
 
+    @OneToMany(mappedBy = "client")
+    private Set<Borrow> borrows;
+
     public Client() {}
 
-    public Client(Long id, String firstName, String lastName, String email, String phoneNumber) {
-        this.id = id;
+    public Client(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -63,10 +66,6 @@ public class Client {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
