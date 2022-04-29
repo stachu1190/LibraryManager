@@ -1,5 +1,7 @@
 package com.example.libraryMS.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -35,12 +37,14 @@ public class Borrow {
             nullable = false
     )
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dateBorrowed;
 
     @Column(
             name="date_returned"
     )
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dateReturned;
 
     public Borrow() {}
@@ -59,6 +63,7 @@ public class Borrow {
     }
 
 
+    public void setId(Long Id) { this.id = Id; }
     public Long getId() {
         return id;
     }

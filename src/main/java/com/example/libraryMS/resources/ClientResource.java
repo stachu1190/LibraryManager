@@ -21,12 +21,12 @@ public class ClientResource {
     ClientRepository clientRepository;
 
     @GetMapping("")
-    public ResponseEntity<List<Client>> getAllBook() {
+    public ResponseEntity<List<Client>> getAllClients() {
         return new ResponseEntity<>(clientRepository.findAll(), HttpStatus.FOUND);
     }
 
     @GetMapping("/{clientId}")
-    public ResponseEntity<Client> getBookById(@PathVariable("clientId") Long clientId) {
+    public ResponseEntity<Client> getClientById(@PathVariable("clientId") Long clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
         if(!client.isPresent())
             throw new NotFoundException("Resource not found");
@@ -40,7 +40,7 @@ public class ClientResource {
     }
 
     @PostMapping("")
-    public ResponseEntity<Client> addBook(@RequestBody Client client) {
+    public ResponseEntity<Client> addClient(@RequestBody Client client) {
         try {
             return new ResponseEntity<>(clientRepository.save(client), HttpStatus.CREATED);
         }
@@ -50,7 +50,7 @@ public class ClientResource {
     }
 
     @PutMapping("/{clientId}")
-    public ResponseEntity<Client> updateBook(@RequestBody Client client,
+    public ResponseEntity<Client> updateClient(@RequestBody Client client,
                                            @PathVariable("clientId") Long clientId) {
         if(!clientRepository.existsById(clientId))
             throw new NotFoundException("Resource not found");
@@ -66,7 +66,7 @@ public class ClientResource {
     }
 
     @DeleteMapping("/{clientId}")
-    public ResponseEntity<Book> deleteBook(@PathVariable("clientId") Long clientId) {
+    public ResponseEntity<Book> deleteClient(@PathVariable("clientId") Long clientId) {
         if(!clientRepository.existsById(clientId))
             throw new NotFoundException("Resource not found");
         else {
@@ -80,6 +80,5 @@ public class ClientResource {
 
         }
     }
-
 
 }

@@ -1,9 +1,11 @@
 package com.example.libraryMS.resources;
 
 import com.example.libraryMS.domain.Book;
+import com.example.libraryMS.domain.Borrow;
 import com.example.libraryMS.exceptions.BadRequestException;
 import com.example.libraryMS.exceptions.NotFoundException;
 import com.example.libraryMS.repository.BookRepository;
+import com.example.libraryMS.repository.BorrowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ public class BookResource {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    BorrowRepository borrowRepository;
+
     @GetMapping("")
     public ResponseEntity<List<Book>> getAllBook() {
         return new ResponseEntity<>(bookRepository.findAll(), HttpStatus.FOUND);
@@ -32,6 +37,21 @@ public class BookResource {
         else {
             try{
                 return new ResponseEntity<>(book.get(), HttpStatus.FOUND);
+            } catch (Exception e) {
+                throw new BadRequestException("Invalid request");
+            }
+        }
+    }
+
+    @GetMapping("/{bookId}/left")
+    public ResponseEntity<Integer> getBookLeftById(@PathVariable("bookId") Long bookId) {
+        Optional<Book> book = bookRepository.findById(bookId);
+        if(!book.isPresent())
+            throw new NotFoundException("Resource not found");
+        else {
+            try{
+                List<Borrow> borrows = borrowRepository.findAllByBookAndDateReturnedIsNull(book.get());
+                return new ResponseEntity<>(book.get().getQuantity() - borrows.size(), HttpStatus.FOUND);
             } catch (Exception e) {
                 throw new BadRequestException("Invalid request");
             }
@@ -85,6 +105,24 @@ public class BookResource {
                 throw new BadRequestException("Invalid request");
             }
 
+        }
+    }
+    @DeleteMapping("/{bookId}/{quantity}")
+    public ResponseEntity<Book> reduceQuantity(@PathVariable("bookId") Long bookId,
+                                               @PathVariable("quantity") int quantity) {
+        if(!bookRepository.existsById(bookId))
+            throw new NotFoundException("Resource not found");
+        else {
+            if(bookRepository.getOne(bookId).getQuantity() - quantity < 0)
+                throw new BadRequestException("book quantity cannot be negative");
+            try {
+                Book updateBook = bookRepository.getOne(bookId);
+                updateBook.setQuantity(updateBook.getQuantity() - quantity);
+                return new ResponseEntity<>(bookRepository.save(updateBook), HttpStatus.OK);
+            }
+            catch(Exception e) {
+                throw new BadRequestException("Invalid request");
+            }
         }
     }
 }

@@ -20,29 +20,4 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-//    @Bean
-//    CommandLineRunner commandLineRunner(BookRepository bookRepository, ClientRepository clientRepository, BorrowRepository borrowRepository) {
-//        return args -> {
-//            Book book = new Book(
-//                    "The Idiot",
-//                    "Fyodor Dostoevsky",
-//                    1
-//            );
-//            bookRepository.save(book);
-//            Client client = new Client(
-//                    "Stanisław",
-//                    "Zielinski",
-//                    "stachu@stachu.pl",
-//                    "999"
-//            );
-//            Date date = new Date();
-//            Borrow borrow = new Borrow(
-//                    book,
-//                    client,
-//                    date
-//            );
-//            borrowRepository.save(borrow);
-//        };
-//    }
-
 }
