@@ -40,8 +40,16 @@ public class BookResource {
 
     @PostMapping("")
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
+        if(book.getQuantity()<=0)
+            throw new BadRequestException("quantity value must be bigger than 0");
         try {
-            return new ResponseEntity<>(bookRepository.save(book), HttpStatus.CREATED);
+            if(!bookRepository.existsBookByAuthorAndTitle(book.getAuthor(), book.getTitle()))
+                return new ResponseEntity<>(bookRepository.save(book), HttpStatus.CREATED);
+            else {
+                Book updateBook = bookRepository.findBookByAuthorAndTitle(book.getAuthor(), book.getTitle());
+                updateBook.setQuantity(updateBook.getQuantity() + book.getQuantity());
+                return new ResponseEntity<>(bookRepository.save(updateBook), HttpStatus.OK);
+            }
         }
         catch (Exception e) {
             throw new BadRequestException("Invalid request");
@@ -79,6 +87,4 @@ public class BookResource {
 
         }
     }
-
-
 }

@@ -38,6 +38,7 @@ public class Book {
             columnDefinition = "TEXT"
     )
     private String author;
+
     @Column(
             name = "quantity",
             nullable = false,
