@@ -43,7 +43,7 @@ public class BookResource {
         }
     }
 
-    @GetMapping("/{bookId}/left")
+    @GetMapping("/left/{bookId}")
     public ResponseEntity<Integer> getBookLeftById(@PathVariable("bookId") Long bookId) {
         Optional<Book> book = bookRepository.findById(bookId);
         if(!book.isPresent())
@@ -51,6 +51,7 @@ public class BookResource {
         else {
             try{
                 List<Borrow> borrows = borrowRepository.findAllByBookAndDateReturnedIsNull(book.get());
+                System.out.println(book.get().getQuantity() - borrows.size());
                 return new ResponseEntity<>(book.get().getQuantity() - borrows.size(), HttpStatus.FOUND);
             } catch (Exception e) {
                 throw new BadRequestException("Invalid request");
