@@ -8,7 +8,6 @@ import java.util.Set;
 
 @Entity(name = "Book")
 @Table(name = "book")
-@OnDelete(action = OnDeleteAction.CASCADE)
 public class Book {
 
     @Id
@@ -47,6 +46,7 @@ public class Book {
     private int quantity;
 
     @OneToMany(mappedBy = "book")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Borrow> borrows;
 
     public Book() {}

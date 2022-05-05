@@ -57,6 +57,7 @@ public class Client {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "client")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Borrow> borrows;
 
     public Client() {}

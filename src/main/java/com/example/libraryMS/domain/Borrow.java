@@ -1,11 +1,13 @@
 package com.example.libraryMS.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity(name = "Boorrow")
+@Entity(name = "Borrow")
 @Table(name = "borrow")
 public class Borrow {
     @Id
