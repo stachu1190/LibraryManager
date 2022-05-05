@@ -3,7 +3,7 @@ package com.example.libraryMS.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity(name = "Boorrow")
 @Table(name = "borrow")
@@ -36,14 +36,14 @@ public class Borrow {
             name="date_borrowed",
             nullable = false
     )
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dateBorrowed;
 
     @Column(
             name="date_returned"
     )
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dateReturned;
 
